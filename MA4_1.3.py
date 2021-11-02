@@ -56,7 +56,8 @@ def main():
 
     nc = 0
     start = pc()    #timing
-    with future.ProcessPoolExecutor(max_worker=10) as ex:
+    print('inter parallel')
+    with future.ProcessPoolExecutor(max_workers=10) as ex:
         pos_result = ex.map(rnd_pos, x_arr, chunksize=int(n/10))
     end = pc()  #timing
     for r in pos_result:
