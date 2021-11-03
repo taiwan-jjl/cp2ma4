@@ -65,6 +65,9 @@ def main():
     # plt.axis('square')
     # plt.show()
 
+    print('exact Vd(1) = ', math.pi**(dim/2)/math.gamma(dim/2+1))
+    print('app. Vd(1) = ', nc/n*2**dim)
+
 if __name__ == '__main__':
 	main()
 
