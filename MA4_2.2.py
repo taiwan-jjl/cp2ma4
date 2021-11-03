@@ -1,8 +1,8 @@
 """
 Student: Jyong-Jhih Lin
 Mail: jyong-jhih.lin.6989@student.uu.se
-Reviewed by:
-Date reviewed:
+Reviewed by: Sven-Erik
+Date reviewed: 2011/11/03
 """
 
 import matplotlib.pyplot as plt #for plot
