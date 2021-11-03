@@ -15,6 +15,7 @@ import concurrent.futures as future #for parallel
 
 
 def rnd_pos(x):
+    # print(x)  #if I turn this on, it can create more loading and increase the core usage.
     if numpy.inner(x,x) <= 1:
         nc = True
     else:
@@ -49,14 +50,48 @@ def main():
 
     #the monte carlo
     x_arr = numpy.array([[random.uniform(-1,1) for j in range(dim)] for i in range(n)])  #List comprehensions
+    #comment
+    #the build-in random number generator cannot and should not be used in parallel. It will cause error and raising issue.
+    #the possible parallel random number generator in numpy is not in the scope of this assignment.
+    #therefore, I only parallelize the position checking part.
     start = pc()    #timing
     nc = len(list(filter(lambda x : numpy.inner(x,x) <= 1, x_arr))) #filter()
     end = pc()  #timing
     print(f"1 Process took {round(end-start, 2)} seconds")
-
+##########
     nc = 0
+    #n2 = int(n/10)
     start = pc()    #timing
     print('inter parallel')
+
+    # with future.ProcessPoolExecutor(max_workers=10) as ex:    #not good
+    #     p1 = ex.submit(rnd_pos, x_arr[0:n2])
+    #     p2 = ex.submit(rnd_pos, x_arr[n2:2*n2])
+    #     p3 = ex.submit(rnd_pos, x_arr[2*n2:3*n2])
+    #     p4 = ex.submit(rnd_pos, x_arr[3*n2:4*n2])
+    #     p5 = ex.submit(rnd_pos, x_arr[4*n2:5*n2])
+    #     p6 = ex.submit(rnd_pos, x_arr[5*n2:6*n2])
+    #     p7 = ex.submit(rnd_pos, x_arr[6*n2:7*n2])
+    #     p8 = ex.submit(rnd_pos, x_arr[7*n2:8*n2])
+    #     p9 = ex.submit(rnd_pos, x_arr[8*n2:9*n2])
+    #     p10 = ex.submit(rnd_pos, x_arr[9*n2:10*n2])
+    #     r1 = p1.result()
+    #     r2 = p2.result()
+    #     r3 = p3.result()
+    #     r4 = p4.result()
+    #     r5 = p5.result()
+    #     r6 = p6.result()
+    #     r7 = p7.result()
+    #     r8 = p8.result()
+    #     r9 = p9.result()
+    #     r10 = p10.result()
+
+    #comment
+    #it is the map method automatically decides how many cores it uses.
+    #I need to tune the chuck size to have a better speed.
+    #it is possible to use "async"+"ProcessPoolExecutor" to enforce using 10 cores all the time, 
+    #but "async" is not in the scope of this assignment.
+    #I think my code already server the purpose of this assignment.
     with future.ProcessPoolExecutor(max_workers=10) as ex:
         pos_result = ex.map(rnd_pos, x_arr, chunksize=int(n/10))
     end = pc()  #timing
