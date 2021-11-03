@@ -96,18 +96,21 @@ def main():
 
     for i in n_arr:
         start = pc()
-        fib_numba_py(i)
+        fib_numba = fib_numba_py(i)
         end = pc()
         t_numba.append(end-start)
 
         start = pc()
         f = Integer(i)
-        f.fib()
+        fib_cpp = f.fib()
         end = pc()
         t_cpp.append(end-start)
 
     print('n = 47, numba time = ', t_numba)
     print('n = 47, cpp time = ', t_cpp)
+    print('fib 47 via numba = ', fib_numba)
+    print('fib 47 via cpp = ', fib_cpp)
+
     
 
 
